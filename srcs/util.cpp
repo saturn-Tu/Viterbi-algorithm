@@ -1,4 +1,5 @@
 #include "util.h"
+using namespace std;
 
 Viterbi::Viterbi() {
     // initial weather_trans_matrix
@@ -22,4 +23,36 @@ Viterbi::Viterbi() {
     init_weather_p[SUNNY] = 0.5;
     init_weather_p[FOGGY] = 0.25;
     init_weather_p[RAINY] = 0.25;
+}
+
+void Viterbi::parse(char* filename) {
+    ifstream input_file;
+    input_file.open(filename);
+    input_file >> predict_days;
+    observed_wearing.resize(predict_days);
+    ground_truth.resize(predict_days);
+    string line;
+    // parse useless end line
+    getline( input_file, line );
+    for(int n=0; n<predict_days; n++) {
+        getline( input_file, line );
+        int pos = line.find(',');
+        string weather = line.substr(0, pos);
+        string coat = line.substr(pos+1);
+        if(weather == "sunny")
+            ground_truth[n] = SUNNY;
+        else if (weather == "foggy")
+            ground_truth[n] = FOGGY;
+        else if (weather == "rainy")
+            ground_truth[n] = RAINY;
+        else
+            assert(false);
+        if(coat == "no")
+            observed_wearing[n] = 0;
+        else if(coat == "yes")
+            observed_wearing[n] = 1;
+        else
+            assert(false);
+    }
+    input_file.close();
 }
