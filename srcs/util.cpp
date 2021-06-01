@@ -92,7 +92,7 @@ void Viterbi::solve() {
         }
     }
     predict_weather.back() = max_idx;
-    for(int n=delta.size()-2; n>=0; n--) {
+    for(int n=(int)delta.size()-2; n>=0; n--) {
         int next_weather = predict_weather[n+1];
         predict_weather[n] = back_record[n+1][next_weather];
     }
