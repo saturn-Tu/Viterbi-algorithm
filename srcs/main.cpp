@@ -9,5 +9,7 @@ int main(int argc, char** argv) {
     }
     Viterbi predictor;
     predictor.parse(argv[1]);
+    predictor.solve();
+    predictor.outputFile(argv[2]);
     return 0;
 }

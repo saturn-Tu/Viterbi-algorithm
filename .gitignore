@@ -2,3 +2,5 @@
 *.o
 *.exe
 *.stackdump
+tmp
+tmp_output
